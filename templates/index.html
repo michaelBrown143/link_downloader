@@ -21,6 +21,7 @@
         h1, h2 {
             margin: 0.3em;
             text-align: center;
+            margin-top: 1em; /* Add margin above the title */
         }
 
         h1 {
@@ -188,7 +189,7 @@
 
     <script>
         const YOUTUBE_REGEX = /^(https?:\/\/)?(www\.youtube\.com|youtube\.com|youtu\.be)(\/.+)?$/;
-        const SOUNDCLOUD_REGEX = /^(https?:\/\/)?(www\.soundcloud\.com|soundcloud\.com)(\/.+)?$/;
+        const SOUNDCLOUD_REGEX = /^(https?:\/\/)?((www|on|m)\.soundcloud\.com|soundcloud\.com)(\/.+)?$/;
         var error_occurred = false;
         var function_returned = false;
         const form = document.getElementById('download-form');
