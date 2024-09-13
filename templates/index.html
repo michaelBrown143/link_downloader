@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Track Download Tool</title>
+    <style>
+        /* Dark theme background and text styles */
+        body {
+            background-color: #1e1e1e;
+            color: #f0f0f0;
+            font-family: Proxima Nova, sans-serif;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        h1, h2 {
+            margin: 0.3em;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 2.5em;
+            color: #00bcd4;
+            margin-bottom: 0em; /* Add margin below the title */
+        }
+
+        h2 {
+            font-size: 1.5em;
+            color: #ffffff;
+            margin-bottom: 0.3em; /* Set the same margin as below the title */
+        }
+
+        form {
+            background-color: #333;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 500px;
+            text-align: center;
+            margin-top: 1em; /* Equal margin between subtitle and form */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+
+        input[type="text"]{
+            padding: 10px;
+            margin: 10px 0;
+            border: none;
+            border-radius: 5px;
+            width: 100%;
+            max-width: 400px;
+            background-color: #555;
+            color: #fff;
+        }
+
+        input[type="radio"] {
+            transform: scale(1.1); /* Optionally, make the radio buttons larger */
+            vertical-align: text-bottom;
+            border: none;
+            border-radius: 5px;
+            max-width: 400px;
+            background-color: #555;
+            color: #fff;
+        }
+
+        input:invalid::after {
+            content: attr(validationMessage);
+            color: red;
+            display: block;
+            text-align: center;
+        }
+
+
+        label {
+            display: block;
+            margin: 10px 0;
+            width: 100%;
+        }
+
+        button {
+            background-color: #00bcd4;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            margin-top: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1.2em; /* Adjust as needed */
+        }
+
+        button:hover {
+            background-color: #0288a3;
+        }
+
+
+        .error, .success {
+            color: red;
+            margin: 20px;
+        }
+
+        .success {
+            color: green;
+        }
+
+        .progress-bar {
+            width: 100%;
+            max-width: 400px;
+            height: 40px;
+            background-color: #444;
+            border-radius: 5px;
+            margin: 20px 0;
+            overflow: hidden;
+            display: none;
+            position: relative; /* Add this line to position children absolutely */
+        }
+
+        .progress-bar-fill {
+            width: 0%;
+            height: 100%;
+            background-color: #00bcd4;
+            transition: width 0.2s;
+        }
+        #progress-label {
+            background-color: transparent; /* Make the label background transparent */
+            color: white; /* Set the text color to black (or any color you prefer) */
+            width: 100%; /* Make the label take up the full width of the progress bar */
+            text-align: center; /* Center the text within the label */
+            position: absolute; /* Position the label absolutely within the progress bar */
+        }
+    </style>
+</head>
+<body>
+    <h1>Track Download Tool</h1>
+    <h2>Another Foggy Tree Service</h2>
+
+    <form id="download-form" method="POST" action="/">
+        <label for="link">Paste your link below:</label>
+
+        <input type="text" name="link" id="link" placeholder="Paste your link here" required>
+
+        <label for="title">Title:</label>
+        <input type="text" id="title" name="title" placeholder="Title" required>
+
+        <label for="artist">Artist:</label>
+        <input type="text" id="artist" name="artist" placeholder="Artist" required>
+
+        <label for="album">Album:</label>
+        <input type="text" id="album" name="album" placeholder="Album" required>
+
+        <!-- Radio button options for download location -->
+        <label>
+            <input type="radio" name="download-location" value="default" checked>
+            Download to Default Server Location
+        </label>
+
+        <label>
+            <input type="radio" name="download-location" value="device">
+            Download to Device
+        </label>
+
+        <button type="submit">Submit</button>
+
+                <!-- Progress bar -->
+        <div class="progress-bar" id="the_progress">
+            <label id="progress-label">Download Progress</label>
+            <div class="progress-bar-fill" id="progress-bar-fill"></div>
+        </div>
+
+                <!-- Error message if invalid -->
+        {% if error %}
+        <script>
+            error_occurred = true;  // Set error_occurred to true
+        </script>
+        <div class="error">{{ error }}</div>
+        {% endif %}
+        <div class="error" id = "js-error"></div>
+        <div class="success" id = "success"></div>
+    </form>
+
+    <script>
+        const YOUTUBE_REGEX = /^(https?:\/\/)?(www\.youtube\.com|youtube\.com|youtu\.be)(\/.+)?$/;
+        const SOUNDCLOUD_REGEX = /^(https?:\/\/)?(www\.soundcloud\.com|soundcloud\.com)(\/.+)?$/;
+        var error_occurred = false;
+        var function_returned = false;
+        const form = document.getElementById('download-form');
+        const progressBarFill = document.getElementById('progress-bar-fill');
+        function download(blob) {
+            // Create a new blob object
+            const newBlob = new Blob([blob]);
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(newBlob);
+            link.download = 'requested_track.m4a';  // Replace with your desired file name and extension
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        // Poll the server for progress updates every second
+        function updateProgress() {
+            console.log('Updating progress');
+            if (!error_occurred && !function_returned) {
+                fetch('/progress')
+                    .then(response => response.json())
+                    .then(data => {
+                        progressBarFill.style.width = data["progress"];;
+                        console.log(data);
+                        if (data["progress"] !== '100%') {
+                            setTimeout(updateProgress, 500);  // Poll every second
+                        }
+                        else {
+                            document.getElementById('progress-label').textContent = 'Conversion Progress';
+                            updateConversionProgress();
+                        }
+                    });
+            }
+        }
+
+        function updateConversionProgress() {
+            if (!error_occurred && !function_returned) {
+                fetch('/progress')
+                    .then(response => response.json())
+                    .then(data => {
+                        progressBarFill.style.width = data["conversion_progress"];;
+                        console.log(data);
+                        if (data["conversion_progress"] !== '100%') {
+                            setTimeout(updateConversionProgress, 500);  // Poll every second
+                        }
+                    });
+            }
+        }
+
+        // Handle form submission with AJAX
+        form.addEventListener('submit', function(event) {
+            const linkInput = document.getElementById('link');
+
+            function_returned = false;
+            error_occurred = false;
+            const errorDiv = document.querySelector('#js-error');
+            const successDiv = document.querySelector('#success');
+            event.preventDefault(); // Prevent form submission
+            successDiv.textContent = '';  // Clear the success message
+            errorDiv.textContent = '';  // Clear the error message
+            if (!YOUTUBE_REGEX.test(link) && !SOUNDCLOUD_REGEX.test(linkInput.value.trim())) {
+                // If the link is invalid, show an alert and prevent form submission
+                linkInput.setCustomValidity('Please enter a valid YouTube or SoundCloud link.');
+            } else {
+                linkInput.setCustomValidity('');
+                event.preventDefault();  // Prevent the default form submission
+
+                const formData = new FormData(form);  // Collect form data
+
+                document.querySelector('.progress-bar').style.display = 'block';
+                console.log('Progress bar should be visible now');
+
+                // Start polling for progress updates
+                const downloadLocation = formData.get('download-location');
+                console.log('here');
+                updateProgress();
+                if (downloadLocation === 'device') {
+                    // Send the form data using fetch to get the file
+                    fetch('/', {
+                        method: 'POST',
+                        body: formData
+                    })
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Network response was not ok');
+                        }
+                        return response.blob();  // Get the file as a blob
+                    })
+                    .then(blob => {
+                        download(blob);
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                    });
+                } else {
+                    // If not downloading to device, submit the form and show success message
+                    fetch('/', {
+                        method: 'POST',
+                        body: formData
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        function_returned = true;
+                        // set the success message to the data response
+                        successDiv.textContent = data.status;
+                        document.querySelector('.progress-bar').style.display = 'none';
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        errorDiv.textContent = 'An error occurred. Please try again.';
+                        error_occurred = true;
+                    });
+                    console.log('complete');
+                }
+            }
+
+        });
+    </script>
+</body>
+</html>
