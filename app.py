@@ -14,8 +14,8 @@ s = sched.scheduler(time.time, time.sleep)
 app = Flask(__name__)
 app.secret_key = 'your_secret_key'  # Required for Flask session
 # Set a default download directory
-DEFAULT_DOWNLOAD_PATH = './downloads'
-APPLE_MUSIC_AUTO_ADD_PATH = os.path.expanduser('auto_add_folder')
+DEFAULT_DOWNLOAD_PATH = '/downloads'
+APPLE_MUSIC_AUTO_ADD_PATH = '/auto_add_folder'
 
 # Ensure the default download path exists
 if not os.path.exists(DEFAULT_DOWNLOAD_PATH):
@@ -101,8 +101,10 @@ def index():
             elif download_location == 'default':
                 print("check 1")
                 # move the file to the Apple Music auto add directory
-                print(os.path.join(download_path, file_name))
+                print(download_path)
+                print(file_name)
                 print(os.path.join(APPLE_MUSIC_AUTO_ADD_PATH, file_name))
+                print(os.path.join(download_path, file_name))
                 os.rename(os.path.join(download_path, file_name),
                           os.path.join(APPLE_MUSIC_AUTO_ADD_PATH, file_name))
                 print("check 2")
