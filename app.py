@@ -69,6 +69,8 @@ def index():
         # For now, just print the link to the console
         download_path = DEFAULT_DOWNLOAD_PATH
         try:
+            if 'download_progress' not in g:
+                g.download_progress = {}
             # create a uuid for the download
             new_uuid = uuid.uuid4()
             download_path = os.path.join(download_path, str(new_uuid))
