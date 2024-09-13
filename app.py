@@ -115,8 +115,8 @@ def index():
                 return jsonify({'status': 'Complete! File Saved to Server.'})
 
         except Exception as e:
-            print("checl 4")
-            return render_template('index.html', error=f"Failed to download: {str(e)}")
+            print("check 4")
+            return jsonify({'error': f"Failed to download: {str(e)}"})
     return render_template('index.html')
 
 

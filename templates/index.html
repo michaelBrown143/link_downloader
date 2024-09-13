@@ -293,6 +293,19 @@
                     .then(data => {
                         function_returned = true;
                         // set the success message to the data response
+                        // check if status is in the data response
+                        if ('status' in data) {
+                            // Set the success message to the data response
+                            successDiv.textContent = data.status;
+                        }
+                        else if ('error' in data) {
+                            // Set the error message to the data response
+                            errorDiv.textContent = data.error;
+                        }
+                        else {
+                            // Set the success message to the data response
+                            errorDiv.textContent = data;
+                        }
                         successDiv.textContent = data.status;
                         document.querySelector('.progress-bar').style.display = 'none';
                     })
