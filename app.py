@@ -99,23 +99,15 @@ def index():
                 threading.Thread(target=s.run).start()
                 return response
             elif download_location == 'default':
-                print("check 1")
-                # move the file to the Apple Music auto add directory
-                print(download_path)
-                print(file_name)
-                print(os.path.join(APPLE_MUSIC_AUTO_ADD_PATH, file_name))
-                print(os.path.join(download_path, file_name))
                 shutil.move(os.path.join(download_path, file_name),
                             os.path.join(APPLE_MUSIC_AUTO_ADD_PATH, file_name))
-                print("check 2")
                 # delete the download directory
                 s.enter(30, 1, delete_directory, argument=(download_path,))  # Delete after 60 seconds
                 threading.Thread(target=s.run).start()
-                print("check 3")
                 return jsonify({'status': 'Complete! File Saved to Server.'})
 
         except Exception as e:
-            print("check 4")
+            print("Failed to download: " + str(e))
             return jsonify({'error': f"Failed to download: {str(e)}"})
     return render_template('index.html')
 
