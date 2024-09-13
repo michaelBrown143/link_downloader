@@ -33,6 +33,7 @@ def delete_directory(path):
 # Progress hook function
 def progress_hook(d):
     print(d['status'])
+    print(d)
     if d['status'] == 'downloading':
         percentage = d['_percent_str']
         download_progress['progress'] = percentage  # Store progress in session
