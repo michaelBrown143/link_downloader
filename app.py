@@ -15,7 +15,7 @@ app = Flask(__name__)
 app.secret_key = 'your_secret_key'  # Required for Flask session
 # Set a default download directory
 DEFAULT_DOWNLOAD_PATH = '/downloads'
-APPLE_MUSIC_AUTO_ADD_PATH = '/auto_add_folder'
+APPLE_MUSIC_AUTO_ADD_PATH = '/auto_add_folder/Automatically Add to Music.localized/'
 
 # Ensure the default download path exists
 if not os.path.exists(DEFAULT_DOWNLOAD_PATH):
