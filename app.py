@@ -35,7 +35,7 @@ def delete_directory(path):
 def progress_hook(d):
     print(d['status'])
     if d['status'] == 'downloading':
-        percentage = re.sub("\\x1b.*m?[ \0$\n\r]", '', d['_percent_str'])
+        percentage = re.sub("\\.*m?[ \0$\n\r]", '', d['_percent_str'])
         download_progress['progress'] = percentage  # Store progress in session
     elif d['status'] == 'finished':
         download_progress['progress'] = '100%'  # Download complete
