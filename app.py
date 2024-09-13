@@ -33,8 +33,6 @@ def delete_directory(path):
 # Progress hook function
 def progress_hook(d):
     print(d['status'])
-    if 'download_progress' not in g:
-        g.download_progress = '0%'
     if d['status'] == 'downloading':
         percentage = d['_percent_str']
         download_progress['progress'] = percentage  # Store progress in session
@@ -75,8 +73,8 @@ def index():
             download_path = os.path.join(download_path, str(new_uuid))
             # Reset progress in session
             # reset the progress
-            download_progress[new_uuid]['progress'] = '0%'
-            download_progress[new_uuid]['conversion_progress'] = '0%'
+            download_progress['progress'] = '0%'
+            download_progress['conversion_progress'] = '0%'
 
             ydl_opts = {
                 'format': 'bestaudio/best',
