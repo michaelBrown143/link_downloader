@@ -264,6 +264,7 @@
                 // Start polling for progress updates
                 const downloadLocation = formData.get('download-location');
                 console.log('here');
+                document.getElementById('progress-label').textContent = 'Conversion Progress';
                 updateProgress();
                 if (downloadLocation === 'device') {
                     // Send the form data using fetch to get the file
