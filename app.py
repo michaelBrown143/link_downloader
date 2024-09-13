@@ -22,6 +22,7 @@ APPLE_MUSIC_AUTO_ADD_PATH = '/auto_add_folder/Automatically Add to Music.localiz
 if not os.path.exists(DEFAULT_DOWNLOAD_PATH):
     os.makedirs(DEFAULT_DOWNLOAD_PATH)
 # Store download progress
+download_progress = {}
 
 
 def delete_directory(path):
@@ -33,12 +34,12 @@ def delete_directory(path):
 def progress_hook(d):
     print(d['status'])
     if 'download_progress' not in g:
-        g.download_progress = {}
+        g.download_progress = '0%'
     if d['status'] == 'downloading':
         percentage = d['_percent_str']
-        g.download_progress['progress'] = percentage  # Store progress in session
+        download_progress['progress'] = percentage  # Store progress in session
     elif d['status'] == 'finished':
-        g.download_progress['progress'] = '100%'  # Download complete
+        download_progress['progress'] = '100%'  # Download complete
 
 
 def add_metadata(file_path, artist, album, title, download_path):
@@ -52,7 +53,7 @@ def add_metadata(file_path, artist, album, title, download_path):
     ]
     ff = FfmpegProgress(cmd)
     for newProgr in ff.run_command_with_progress():
-        g.download_progress['conversion_progress'] = str(newProgr) + '%'
+        download_progress['conversion_progress'] = str(newProgr) + '%'
     print('Download and conversion complete!')
     return title + '.m4a'
 
@@ -69,15 +70,13 @@ def index():
         # For now, just print the link to the console
         download_path = DEFAULT_DOWNLOAD_PATH
         try:
-            if 'download_progress' not in g:
-                g.download_progress = {}
             # create a uuid for the download
             new_uuid = uuid.uuid4()
             download_path = os.path.join(download_path, str(new_uuid))
             # Reset progress in session
             # reset the progress
-            g.download_progress['progress'] = '0%'
-            g.download_progress['conversion_progress'] = '0%'
+            download_progress[new_uuid]['progress'] = '0%'
+            download_progress[new_uuid]['conversion_progress'] = '0%'
 
             ydl_opts = {
                 'format': 'bestaudio/best',
@@ -118,13 +117,11 @@ def index():
 
 @app.route('/progress', methods=['GET'])
 def progress():
-    if 'download_progress' not in g:
-        g.download_progress = {}
     # Send current progress to the frontend
-    print('Download Progress: ' + g.download_progress.get('progress', '0%') + ' Conversion Progress: ' +
-          g.download_progress.get('conversion_progress', '0%'))
-    return jsonify(progress=g.download_progress.get('progress', '0%'),
-                   conversion_progress=g.download_progress.get('conversion_progress', '0%'))
+    print('Download Progress: ' + download_progress.get('progress', '0%') + ' Conversion Progress: ' +
+          download_progress.get('conversion_progress', '0%'))
+    return jsonify(progress=download_progress.get('progress', '0%'),
+                   conversion_progress=download_progress.get('conversion_progress', '0%'))
 
 
 if __name__ == '__main__':
