@@ -105,8 +105,8 @@ def index():
                 print(file_name)
                 print(os.path.join(APPLE_MUSIC_AUTO_ADD_PATH, file_name))
                 print(os.path.join(download_path, file_name))
-                os.rename(os.path.join(download_path, file_name),
-                          os.path.join(APPLE_MUSIC_AUTO_ADD_PATH, file_name))
+                shutil.move(os.path.join(download_path, file_name),
+                            os.path.join(APPLE_MUSIC_AUTO_ADD_PATH, file_name))
                 print("check 2")
                 # delete the download directory
                 s.enter(30, 1, delete_directory, argument=(download_path,))  # Delete after 60 seconds
