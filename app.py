@@ -116,6 +116,8 @@ def index():
 
 @app.route('/progress', methods=['GET'])
 def progress():
+    if 'download_progress' not in g:
+        g.download_progress = {}
     # Send current progress to the frontend
     print('Download Progress: ' + g.download_progress.get('progress', '0%') + ' Conversion Progress: ' +
           g.download_progress.get('conversion_progress', '0%'))
