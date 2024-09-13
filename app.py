@@ -7,6 +7,7 @@ import sched
 import time
 import shutil
 import threading
+import re
 
 
 # Create a scheduler object
@@ -35,7 +36,7 @@ def progress_hook(d):
     print(d['status'])
     print(d)
     if d['status'] == 'downloading':
-        percentage = d['_percent_str']
+        percentage = re.sub("\\x1b.*m?[ \0$\n\r]", '', d['_percent_str'])
         download_progress['progress'] = percentage  # Store progress in session
     elif d['status'] == 'finished':
         download_progress['progress'] = '100%'  # Download complete
