@@ -101,6 +101,8 @@ def index():
             elif download_location == 'default':
                 print("check 1")
                 # move the file to the Apple Music auto add directory
+                print(os.path.join(download_path, file_name))
+                print(os.path.join(APPLE_MUSIC_AUTO_ADD_PATH, file_name))
                 os.rename(os.path.join(download_path, file_name),
                           os.path.join(APPLE_MUSIC_AUTO_ADD_PATH, file_name))
                 print("check 2")
