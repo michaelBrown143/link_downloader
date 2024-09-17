@@ -54,6 +54,7 @@ input[type="text"], button, input[type="radio"] {
 
 button {
     background-color: #00bcd4;
+    color: white;
     cursor: pointer;
     font-size: 1.2em;
 }
@@ -140,4 +141,8 @@ a:hover, a:active, button:hover {
         flex-direction: column;
         gap: 5px;
     }
+}
+
+#on-server-list {
+    margin-bottom: 20px; /* Adjust as needed */
 }
