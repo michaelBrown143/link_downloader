@@ -26,13 +26,24 @@ s = sched.scheduler(time.time, time.sleep)
 
 app = Flask(__name__)
 app.secret_key = 'your_secret_key'  # Required for Flask session
+
+
 # Set a default download directory
 
-app.config['CELERY_BROKER_URL'] = 'redis://localhost:6379/0'  # Replace with your broker URL
-app.config['result_backend'] = 'redis://localhost:6379/0'  # Replace with your result backend URL
-celery = Celery(app.name, broker=app.config['CELERY_BROKER_URL'])
-celery.conf.update(app.config)
+def make_celery(app):
+    celery = Celery(
+        app.import_name,
+        backend=app.config['CELERY_RESULT_BACKEND'],
+        broker=app.config['CELERY_BROKER_URL']
+    )
+    celery.conf.update(app.config)
+    return celery
 
+
+app.config['CELERY_BROKER_URL'] = 'redis://redis:6379/0'
+app.config['CELERY_RESULT_BACKEND'] = 'redis://redis:6379/0'
+
+celery = make_celery(app)
 # Ensure the default download path exists
 if not os.path.exists(DEFAULT_DOWNLOAD_PATH):
     os.makedirs(DEFAULT_DOWNLOAD_PATH)
