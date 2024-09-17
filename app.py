@@ -114,7 +114,7 @@ def download_and_convert(self, link, artist, album, title, download_location='de
                                              'location': download_location, })
     # delete original file
     print("deleting" + audio_file)
-    os.remove(audio_file)
+    #os.remove(audio_file)
     logger.info('Download and conversion complete!')
     return title + '.m4a'
 
