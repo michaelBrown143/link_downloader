@@ -173,6 +173,8 @@ def update_all_tasks():
                     s.enter(48 * 60 * 60, 1, delete_directory, argument=(task.result['file_name'],))
                 elif task.result['location'] == 'default':
                     # move the file to the auto add folder
+                    print('moving file: ' + os.path.join(DEFAULT_DOWNLOAD_PATH, task.result['file_name']))
+                    print('to: ' + os.path.join(APPLE_MUSIC_AUTO_ADD_PATH, task.result['file_name']))
                     shutil.move(os.path.join(DEFAULT_DOWNLOAD_PATH, task.result['file_name']),
                                 os.path.join(APPLE_MUSIC_AUTO_ADD_PATH, task.result['file_name']))
                     on_server_tasks.append(task.result)
