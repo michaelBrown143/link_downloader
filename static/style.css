@@ -47,7 +47,7 @@ form {
 
 input[type="text"]{
     padding: 10px;
-    margin: 10px 0;
+    margin: 5px 0 15px 0;
     border: none;
     border-radius: 5px;
     width: 100%;
@@ -76,7 +76,7 @@ input:invalid::after {
 
 label {
     display: block;
-    margin: 10px 0;
+    margin: 10px 0px 0 0;
     width: 100%;
 }
 
@@ -293,7 +293,7 @@ a:active {
     display: flex;
     /* align label to left */
     align-items: center;
-    margin-bottom: 10px;
+    margin-bottom: 15px;
     flex-wrap: wrap; /* Allows the text to wrap into multiple lines */
 }
 
