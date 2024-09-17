@@ -15,10 +15,11 @@ from datetime import datetime, timedelta
 from werkzeug.exceptions import BadRequest
 
 SECRET_KEY = os.environ.get('AM_I_IN_A_DOCKER_CONTAINER', False)
-DEFAULT_DOWNLOAD_PATH = '/downloads'
+DEFAULT_DOWNLOAD_PATH = './downloads'
 APPLE_MUSIC_AUTO_ADD_PATH = '/Users/michael/Music/iTunes/iTunes Media/Automatically Add to Music.localized/'
 if SECRET_KEY:
     APPLE_MUSIC_AUTO_ADD_PATH = '/auto_add_folder/Automatically Add to Music.localized/'
+    DEFAULT_DOWNLOAD_PATH = '/downloads'
     print('I am running in a Docker container')
 
 # Create a scheduler object
@@ -111,6 +112,7 @@ def download_and_convert(self, link, artist, album, title, download_location='de
                                              'start_time': start_time.isoformat(),
                                              'location': download_location, })
     # delete original file
+    print("deleting" + audio_file)
     os.remove(audio_file)
     logger.info('Download and conversion complete!')
     return title + '.m4a'
