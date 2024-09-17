@@ -97,6 +97,7 @@ function updateAllTasks() {
             });
             //iterate through the available_for_download list, no progress bars but a link to the file
             data.available_for_download.forEach(task => {
+                const taskDiv = document.createElement('div');
                 const link = document.createElement('a');
                 link.href = '/download/' + task.file_name;  // Replace '/downloads/' with the actual path to the downloads directory
                 link.textContent = 'Download ' + task.file_name;
