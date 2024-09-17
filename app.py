@@ -116,10 +116,6 @@ def download_and_convert(self, link, artist, album, title, download_location='de
                                              'start_time': start_time.isoformat(),
                                              'location': download_location, })
     # delete original file
-    if os.path.exists(audio_file):
-        print('hi')
-    if os.path.exists(os.path.join(DEFAULT_DOWNLOAD_PATH, title + '.m4a')):
-        print('hi2')
     print("deleting" + audio_file)
     #os.remove(audio_file)
     logger.info('Download and conversion complete!')
@@ -162,23 +158,17 @@ def update_all_tasks():
     # create a dict of all tasks from their meta
     try:
         still_processing = []
-        print('hi7')
         # iterate through task ids and add to the list if they are from the last 48 hours
         for task_id in active_ids:
             task = celery.AsyncResult(task_id)
             # if complete and device, add to available_for_download
             if task.state == 'SUCCESS':
-                print('hi4')
                 if task.result['location'] == 'device':
-                    print('hi5')
                     available_for_download.append(task.result)
                     # schedule the file for deletion after 48 hours
                     s.enter(48 * 60 * 60, 1, delete_directory, argument=(task.result['file_name'],))
                 elif task.result['location'] == 'default':
-                    print('hi6')
                     # move the file to the auto add folder
-                    if os.path.exists(os.path.join(DEFAULT_DOWNLOAD_PATH, task.result['file_name'])):
-                        print('hi3')
                     print('moving file: ' + os.path.join(DEFAULT_DOWNLOAD_PATH, task.result['file_name']))
                     print('to: ' + os.path.join(APPLE_MUSIC_AUTO_ADD_PATH, task.result['file_name']))
                     shutil.move(os.path.join(DEFAULT_DOWNLOAD_PATH, task.result['file_name']),

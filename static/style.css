@@ -41,7 +41,7 @@ form, .box {
     align-items: center;
 }
 
-input[type="text"], button, input[type="radio"] {
+input[type="text"], button {
     width: 100%;
     max-width: 400px;
     padding: 10px;
@@ -147,13 +147,27 @@ a:hover, a:active {
     margin-bottom: 20px; /* Adjust as needed */
 }
 
+.radio-labels{
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
 .radio-label {
     display: flex;
-    align-items: center; /* Centers the radio button vertically relative to the text */
-    gap: 10px; /* Adds space between the radio button and the text */
+    /* align label to left */
+    align-items: center;
+    margin-bottom: 10px;
     flex-wrap: wrap; /* Allows the text to wrap into multiple lines */
 }
 
 .radio-label input[type="radio"] {
-    margin-top: 0; /* Ensure there's no additional margin */
+    margin-right: 1%;
+    margin-left: 1%;
+    width: 10%;
+}
+
+.radio-label span {/* Allow the text to grow to fill the available space */
+    margin-left: 1%;
+    margin-right: 1%;
+    width: 85%
 }

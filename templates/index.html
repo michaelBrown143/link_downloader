@@ -25,16 +25,17 @@
         <input type="text" id="album" name="album" placeholder="Album" required>
 
         <!-- Radio button options for download location -->
+        <div class="radio-labels">
         <label class="radio-label">
             <input type="radio" name="download-location" value="default" checked>
-            Download to Default Server Location
+            <span>Download to Default Server Location</span>
         </label>
 
         <label class="radio-label">
             <input type="radio" name="download-location" value="device">
-            Download to Device
+            <span> Download to Device </span>
         </label>
-
+        </div>
         <button type="submit">Submit</button>
 
         <div class="error" id = "js-error"></div>
