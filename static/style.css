@@ -146,3 +146,14 @@ a:hover, a:active {
 #on-server-div {
     margin-bottom: 20px; /* Adjust as needed */
 }
+
+.radio-label {
+    display: flex;
+    align-items: center; /* Centers the radio button vertically relative to the text */
+    gap: 10px; /* Adds space between the radio button and the text */
+    flex-wrap: wrap; /* Allows the text to wrap into multiple lines */
+}
+
+.radio-label input[type="radio"] {
+    margin-top: 0; /* Ensure there's no additional margin */
+}
