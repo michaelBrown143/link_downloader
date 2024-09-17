@@ -98,6 +98,10 @@ def download_and_convert(self, link, artist, album, title, download_location='de
         '-metadata', f'title={title}',
         os.path.join(DEFAULT_DOWNLOAD_PATH, title + '.m4a')
     ]
+    # check if file exists
+    if os.path.exists(os.path.join(DEFAULT_DOWNLOAD_PATH, title + '.m4a')):
+        print('hi')
+
     print(os.path.join(DEFAULT_DOWNLOAD_PATH, title + '.m4a'))
     ff = FfmpegProgress(cmd)
     for newProgr in ff.run_command_with_progress():
@@ -113,6 +117,8 @@ def download_and_convert(self, link, artist, album, title, download_location='de
                                              'start_time': start_time.isoformat(),
                                              'location': download_location, })
     # delete original file
+    if os.path.exists(audio_file):
+        print('hi')
     print("deleting" + audio_file)
     #os.remove(audio_file)
     logger.info('Download and conversion complete!')
