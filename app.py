@@ -98,6 +98,7 @@ def download_and_convert(self, link, artist, album, title, download_location='de
         '-metadata', f'title={title}',
         os.path.join(DEFAULT_DOWNLOAD_PATH, title + '.m4a')
     ]
+    print(os.path.join(DEFAULT_DOWNLOAD_PATH, title + '.m4a'))
     ff = FfmpegProgress(cmd)
     for newProgr in ff.run_command_with_progress():
         self.update_state(state='PROGRESS', meta={'title': title,
