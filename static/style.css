@@ -256,3 +256,26 @@ html, body {
     max-height: 100vh; /* Limit the container height */
     overflow-y: auto; /* Allow vertical scrolling */
 }
+
+/* Default unvisited link color - light blue (same as submit button) */
+a:link {
+    color: #00bcd4; /* Light blue color for unclicked links */
+    text-decoration: none; /* Remove underline if desired */
+}
+
+/* Color for visited links - default blue or choose your own color */
+a:visited {
+    color: #0000EE; /* Default blue or any color you'd like for clicked links */
+}
+
+/* Color when hovering over links */
+a:hover {
+    color: #0288a3; /* Slightly darker blue for hover (same as submit button hover) */
+    text-decoration: underline; /* Optional: underline the link when hovered */
+}
+
+/* Active link color (when clicked and held) */
+a:active {
+    color: #0288a3; /* Same as hover color */
+}
+
