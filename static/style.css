@@ -1,0 +1,247 @@
+body {
+    background-color: #1e1e1e;
+    color: #f0f0f0;
+    font-family: Proxima Nova, sans-serif;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+h1, h2 {
+    margin: 0.3em;
+    text-align: center;
+    margin-top: 1em; /* Add margin above the title */
+}
+
+h1 {
+    font-size: 2.5em;
+    color: #00bcd4;
+    margin-bottom: 0em; /* Add margin below the title */
+}
+
+h2 {
+    font-size: 1.5em;
+    color: #ffffff;
+    margin-bottom: 0.3em; /* Set the same margin as below the title */
+}
+
+form {
+    background-color: #333;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 500px;
+    text-align: center;
+    margin-top: 1em; /* Equal margin between subtitle and form */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+
+input[type="text"]{
+    padding: 10px;
+    margin: 10px 0;
+    border: none;
+    border-radius: 5px;
+    width: 100%;
+    max-width: 400px;
+    background-color: #555;
+    color: #fff;
+}
+
+input[type="radio"] {
+    transform: scale(1.1); /* Optionally, make the radio buttons larger */
+    vertical-align: text-bottom;
+    border: none;
+    border-radius: 5px;
+    max-width: 400px;
+    background-color: #555;
+    color: #fff;
+}
+
+input:invalid::after {
+    content: attr(validationMessage);
+    color: red;
+    display: block;
+    text-align: center;
+}
+
+
+label {
+    display: block;
+    margin: 10px 0;
+    width: 100%;
+}
+
+button {
+    background-color: #00bcd4;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    margin-top: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1.2em; /* Adjust as needed */
+}
+
+button:hover {
+    background-color: #0288a3;
+}
+
+
+.error, .success {
+    color: red;
+    margin: 20px;
+    display: none;
+}
+
+.success {
+    color: green;
+}
+
+#progress-label {
+    background-color: transparent; /* Make the label background transparent */
+    color: white; /* Set the text color to black (or any color you prefer) */
+    width: 100%; /* Make the label take up the full width of the progress bar */
+    text-align: center; /* Center the text within the label */
+    display: none; /* Display the label as a block element */
+    position: absolute; /* Position the label absolutely within the progress bar */
+}
+.box {
+    background-color: #333;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 500px;
+    text-align: center;
+    margin-top: 1em;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.task-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 10px 0;
+}
+
+/* Container for In Progress section */
+.in-progress-container {
+    width: 100%; /* Full width of parent container or viewport */
+    overflow: hidden;
+    padding: 10px; /* Optional padding */
+    box-sizing: border-box;
+}
+
+/* List of in-progress tasks */
+#in-progress-list {
+    width: 100%; /* Full width of the container */
+    display: flex;
+    flex-direction: column;
+    gap: 10px; /* Space between tasks */
+}
+
+/* Individual task rows */
+.progress-bar-container {
+    display: flex;
+    align-items: center;
+    width: 100%; /* Full width of parent container */
+}
+
+/* File name column */
+.file-name {
+    flex: 0 0 30%; /* Fixed width of 30% */
+    text-align: left;
+    padding: 0 10px;
+    box-sizing: border-box;
+}
+
+/* Progress bars container */
+.progress-bars {
+    flex: 1; /* Take the remaining space */
+    display: flex;
+    gap: 10px; /* Space between progress bars */
+    box-sizing: border-box;
+}
+
+/* Progress bar styling */
+.progress-bar {
+    flex: 1; /* Take equal space within the progress-bars container */
+    height: 20px;
+    background-color: #444;
+    border-radius: 5px;
+    position: relative;
+    overflow: hidden;
+}
+
+.progress-bar-fill {
+    height: 100%;
+    background-color: #00bcd4;
+    transition: width 0.2s;
+    position: absolute;
+}
+
+.progress-bar-label {
+    position: absolute;
+    width: 100%;
+    text-align: center;
+    color: white;
+    font-size: 0.8em;
+    line-height: 20px; /* Same as progress bar height */
+}
+
+/* Dark theme background and text styles */
+@media (max-width: 500px) {
+    form {
+        width: 80%; /* Adjust the width of the form */
+        padding: 10px; /* Adjust the padding of the form */
+    }
+    .box {
+        width: 80%; /* Adjust the width of the box */
+        padding: 10px; /* Adjust the padding of the box */
+    }
+    input[type="text"], button {
+        width: 100%; /* Make the input fields and button take up the full width of the form */
+    }
+    body {
+        font-size: 14px;
+    }
+    h1 {
+        font-size: 2em;
+    }
+
+    h2 {
+        font-size: 1.2em;
+    }
+
+    input[type="text"], button {
+        width: 90%;
+        max-width: none; /* Remove max-width to allow full-width on small screens */
+    }
+
+
+
+    .task-row {
+        flex-direction: column;
+    }
+
+    .file-name {
+        flex: none; /* Let file names wrap and adjust width */
+        padding: 0;
+    }
+
+    .progress-bars {
+        flex-direction: column;
+        gap: 5px;
+    }
+}
