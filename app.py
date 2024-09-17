@@ -19,7 +19,7 @@ DEFAULT_DOWNLOAD_PATH = './downloads'
 APPLE_MUSIC_AUTO_ADD_PATH = '/Users/michael/Music/iTunes/iTunes Media/Automatically Add to Music.localized/'
 if SECRET_KEY:
     APPLE_MUSIC_AUTO_ADD_PATH = '/auto_add_folder/Automatically Add to Music.localized/'
-    DEFAULT_DOWNLOAD_PATH = '/downloads'
+    DEFAULT_DOWNLOAD_PATH = './downloads'
     print('I am running in a Docker container')
 
 # Create a scheduler object
