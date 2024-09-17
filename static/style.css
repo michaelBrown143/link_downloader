@@ -245,3 +245,14 @@ button:hover {
         gap: 5px;
     }
 }
+
+html, body {
+    height: 100%;
+    margin: 0;
+    overflow-x: hidden; /* Prevent horizontal scrolling */
+    overflow-y: auto;   /* Allow vertical scrolling */
+}
+.container {
+    max-height: 100vh; /* Limit the container height */
+    overflow-y: auto; /* Allow vertical scrolling */
+}
