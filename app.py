@@ -15,7 +15,7 @@ from datetime import datetime, timedelta
 from werkzeug.exceptions import BadRequest
 
 SECRET_KEY = os.environ.get('AM_I_IN_A_DOCKER_CONTAINER', False)
-DEFAULT_DOWNLOAD_PATH = './downloads'
+DEFAULT_DOWNLOAD_PATH = '/downloads'
 APPLE_MUSIC_AUTO_ADD_PATH = '/Users/michael/Music/iTunes/iTunes Media/Automatically Add to Music.localized/'
 if SECRET_KEY:
     APPLE_MUSIC_AUTO_ADD_PATH = '/auto_add_folder/Automatically Add to Music.localized/'
